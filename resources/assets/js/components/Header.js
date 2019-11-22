@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Link, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Home from './Home';
 import About from './About';
 import Category from './Category/Index';
@@ -18,156 +18,156 @@ import Form from 'react-bootstrap/Form';
 
 export default class Header extends Component {
 
-    constructor(){
+    constructor() {
         super();
-        this.state={
-            categories :[],
-            isLogin : false,
-            modalShow : false,
-            registerModalShow : false,
-            forgetModalShow : false,
-            validated : false,
-            email : ' ',
-            password : ' ',
+        this.state = {
+            categories: [],
+            isLogin: false,
+            modalShow: false,
+            registerModalShow: false,
+            forgetModalShow: false,
+            validated: false,
+            email: ' ',
+            password: ' ',
             errormessage: ' ',
-            loginEmail : 'Email',
-            loginPassword : 'Password',
-            registerationUserName : 'Username',
-            registrationConfirmPassword : 'Confirm Password',
-            forgetEmail : 'Email Id',
+            loginEmail: 'Email',
+            loginPassword: 'Password',
+            registerationUserName: 'Username',
+            registrationConfirmPassword: 'Confirm Password',
+            forgetEmail: 'Email Id',
         }
     }
 
     // const [validated, setValidated] = useState(false);
 
-  handleSubmit(event) {
-    const form = event.currentTarget;
-    let err = '';
-    console.log(form.email);
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    if(this.state.email === ' '){
-        // alert("Please Enter Proper Email");
-        err = <strong className="warning">Please Enter Proper Email</strong>;
-        this.setState({errormessage : err,});
-    }
-    if(this.state.password === ' '){
-        // alert("Please Enter Correct Password");
-        err = <strong className="warning">Please Enter Correct Password</strong>;
-        this.setState({errormessage : err,});
-    }
-    this.setState({
-        validated : true,
-        
-    });
-    console.log(this.state.validated);
-    // setValidated(true);
-  }
+    handleSubmit(event) {
+        const form = event.currentTarget;
+        let err = '';
+        console.log(form.email);
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        if (this.state.email === ' ') {
+            // alert("Please Enter Proper Email");
+            err = <strong className="warning">Please Enter Proper Email</strong>;
+            this.setState({ errormessage: err, });
+        }
+        if (this.state.password === ' ') {
+            // alert("Please Enter Correct Password");
+            err = <strong className="warning">Please Enter Correct Password</strong>;
+            this.setState({ errormessage: err, });
+        }
+        this.setState({
+            validated: true,
 
-  myChangeHandler(event){
-    let nam = event.target.name;
-    let val = event.target.value;
-    
-    this.setState({
-        [nam]: val
-    });
-    console.log(this.state.email);
-  }
-
-    componentDidMount(){
-        axios.get('http://localhost:8000/category')
-        .then(response=>{
-            this.setState({categories:response.data});
         });
+        console.log(this.state.validated);
+        // setValidated(true);
     }
-     
-    loginUser(){
+
+    myChangeHandler(event) {
+        let nam = event.target.name;
+        let val = event.target.value;
+
+        this.setState({
+            [nam]: val
+        });
+        console.log(this.state.email);
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:8000/category')
+            .then(response => {
+                this.setState({ categories: response.data });
+            });
+    }
+
+    loginUser() {
         this.setState({
             isLogin: true
         });
         console.log(this.state.isLogin);
     }
-    loginOut(){
+    loginOut() {
         this.setState({
             isLogin: false
         });
         console.log(this.state.isLogin);
     }
 
-    handleClose(){
+    handleClose() {
         this.setState({
-            modalShow : false,
-            registerModalShow : false,
-            forgetModalShow : false,
+            modalShow: false,
+            registerModalShow: false,
+            forgetModalShow: false,
         });
         console.log(this.state.modalShow);
     }
-    ShowRegistrationForm(){
+    ShowRegistrationForm() {
         this.setState({
-            modalShow : false,
-            registerModalShow : true,
-            forgetModalShow : false,
+            modalShow: false,
+            registerModalShow: true,
+            forgetModalShow: false,
         });
     }
-    ShowForgetPassword(){
+    ShowForgetPassword() {
         this.setState({
-            modalShow : false,
-            registerModalShow : false,
-            forgetModalShow : true,
+            modalShow: false,
+            registerModalShow: false,
+            forgetModalShow: true,
         });
     }
-    handleShow(){
+    handleShow() {
         this.setState({
-            modalShow : true,
-            registerModalShow : false,
-            forgetModalShow : false,
+            modalShow: true,
+            registerModalShow: false,
+            forgetModalShow: false,
         });
-        console.log('Hi'+this.state.modalShow);
+        console.log('Hi' + this.state.modalShow);
     }
-    
+
     render() {
-        if(this.state.isLogin){
+        if (this.state.isLogin) {
             return (
                 <Router>
-                <div>
-                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <SocialIcon url="https://facebook.com/jaketrent" network="facebook" style={{ height: 25, width: 25 }} bgColor="white" /> &nbsp;&nbsp;
+                    <div>
+                        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                            <ul className="navbar-nav mr-auto">
+                                <li className="nav-item active">
+                                    <SocialIcon url="https://facebook.com/jaketrent" network="facebook" style={{ height: 25, width: 25 }} bgColor="white" /> &nbsp;&nbsp;
                                 <SocialIcon url="https://twitter.com/jaketrent" network="twitter" style={{ height: 25, width: 25 }} bgColor="white" /> &nbsp;&nbsp;
                                 <SocialIcon url="https://linkedin.com/jaketrent" network="linkedin" style={{ height: 25, width: 25 }} bgColor="white" /> &nbsp;&nbsp;
                             </li>
-                        </ul>
-                        <span style={{color:"white"}} onClick={this.loginOut.bind(this)}>Logout</span>
-                    </nav>
-                    <div className="header">
-                        <h2>
-                            Simply Learn Anything
-                        </h2>
-                    </div>
-                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active">
-                                    <Link to="/Dashboard" className="nav-link">Dashboard<span className="sr-only">(current)</span></Link>
-                                </li>
-                                <li className="nav-item active">
-                                    <Link to="/Category" className="nav-link">Category<span className="sr-only">(current)</span></Link>
-                                </li>
                             </ul>
+                            <span style={{ color: "white" }} onClick={this.loginOut.bind(this)}>Logout</span>
+                        </nav>
+                        <div className="header">
+                            <h2>
+                                SimplyiLearn
+                             </h2>
                         </div>
-                    </nav>
-                    <Dashboard />
-                </div>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/Category" component={Category} /> 
+                        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul className="navbar-nav mr-auto">
+                                    <li className="nav-item active">
+                                        <Link to="/Dashboard" className="nav-link">Dashboard<span className="sr-only">(current)</span></Link>
+                                    </li>
+                                    <li className="nav-item active">
+                                        <Link to="/Category" className="nav-link">Category<span className="sr-only">(current)</span></Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                        <Dashboard />
+                    </div>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/Category" component={Category} />
                 </Router>
             );
         }
-        else{
-            return(
+        else {
+            return (
                 <Router>
                     <div>
                         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -178,7 +178,7 @@ export default class Header extends Component {
                                     <SocialIcon url="https://linkedin.com/jaketrent" network="linkedin" style={{ height: 25, width: 25 }} bgColor="white" /> &nbsp;&nbsp;
                                 </li>
                             </ul>
-                            <span style={{color:"white"}} onClick={this.handleShow.bind(this)}>Login</span>
+                            <span style={{ color: "white" }} onClick={this.handleShow.bind(this)}>Login</span>
                         </nav>
                         <div className="header">
                             <h2>
@@ -190,22 +190,22 @@ export default class Header extends Component {
                             {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button> */}
-    
+
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul className="navbar-nav mr-auto">
-                                {
-                                    this.state.categories.map(category=>{
-                                        return (
-                                            <li className="nav-item active">
-                                                <Link to={`${category.name.toLowerCase().split(" ").join("-")}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
-                                            </li>
-                                        ) 
-                                    })
-                                }
-                                <li className="nav-item active">
-                                    <Link to="/about" className="nav-link">About Us<span className="sr-only">(current)</span></Link>
-                                </li>
-                                {/* <li className="nav-item active">
+                                    {
+                                        this.state.categories.map(category => {
+                                            return (
+                                                <li className="nav-item active">
+                                                    <Link to={`${category.name.toLowerCase().split(" ").join("-")}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                    <li className="nav-item active">
+                                        <Link to="/about" className="nav-link">About Us<span className="sr-only">(current)</span></Link>
+                                    </li>
+                                    {/* <li className="nav-item active">
                                     <Link to="/Category" className="nav-link">Category<span className="sr-only">(current)</span></Link>
                                 </li> */}
                                 </ul>
@@ -216,15 +216,15 @@ export default class Header extends Component {
                             </div>
                         </nav>
                         {
-                            this.state.categories.map(category=>{
-                                return(
+                            this.state.categories.map(category => {
+                                return (
                                     <Route exact path={`${category.name.toLowerCase().split(" ").join("-")}`} component={`${category.name}`} />
                                 )
                             })
                         }
                         <Route exact path="/" component={Home} />
                         <Route exact path="/about" component={About} />
-                        <Route exact path="/Category" component={Category} /> 
+                        <Route exact path="/Category" component={Category} />
 
 
                         {/* Login Modal start Here */}
@@ -237,27 +237,27 @@ export default class Header extends Component {
                                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>{this.state.loginEmail}</Form.Label>
-                                        <Form.Control type="email" name="email" placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
-                                        
+                                        <Form.Control type="email" name="email" placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
+
                                     </Form.Group>
                                     <Form.Group controlId="formGroupPassword">
                                         <Form.Label>{this.state.loginPassword}</Form.Label>
-                                        <Form.Control type="password" name="password" placeholder="Password" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
-                                        
+                                        <Form.Control type="password" name="password" placeholder="Password" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
+
                                     </Form.Group>
                                     <Form.Group id="formGridCheckbox">
                                         <Form.Check type="checkbox" label="Remember Me" />
-                                    </Form.Group> 
-                                    <Button type="submit" className="text-center" onClick={this.loginUser.bind(this)}>Login</Button>                                                                                    
+                                    </Form.Group>
+                                    <Button type="submit" className="text-center" onClick={this.loginUser.bind(this)}>Login</Button>
                                 </Form>
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="secondary" onClick={this.ShowForgetPassword.bind(this)}>
-                                Forget Password
+                                    Forget Password
                                 </Button>
-                                
+
                                 <Button type="submit" variant="success" onClick={this.ShowRegistrationForm.bind(this)}>
-                                Create New Account
+                                    Create New Account
                                 </Button>
                             </Modal.Footer>
                         </Modal>
@@ -272,33 +272,33 @@ export default class Header extends Component {
                                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>{this.state.registerationUserName}</Form.Label>
-                                        <Form.Control type="text" name={`${this.state.registerationUserName}`} placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
+                                        <Form.Control type="text" name={`${this.state.registerationUserName}`} placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>{this.state.loginEmail}</Form.Label>
-                                        <Form.Control type="email" name={`${this.state.loginEmail}`} placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
+                                        <Form.Control type="email" name={`${this.state.loginEmail}`} placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupPassword">
                                         <Form.Label>{this.state.loginPassword}</Form.Label>
-                                        <Form.Control type="password" name={`${this.state.loginPassword}`} placeholder="Password" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
+                                        <Form.Control type="password" name={`${this.state.loginPassword}`} placeholder="Password" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
                                     </Form.Group>
                                     <Form.Group controlId="formGroupPassword">
                                         <Form.Label>{this.state.registrationConfirmPassword}</Form.Label>
-                                        <Form.Control type="password" name={`${this.state.registrationConfirmPassword}`} placeholder="Password" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
+                                        <Form.Control type="password" name={`${this.state.registrationConfirmPassword}`} placeholder="Password" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
                                     </Form.Group>
                                     {/* <Form.Group id="formGridCheckbox">
                                         <Form.Check type="checkbox" label="Remember Me" />
                                     </Form.Group>  */}
-                                    <Button type="submit" variant="success" className="text-center">Submit</Button>                                                                                    
+                                    <Button type="submit" variant="success" className="text-center">Submit</Button>
                                 </Form>
                             </Modal.Body>
                             <Modal.Footer>
                                 {/* <Button variant="secondary" onClick={this.handleClose.bind(this)}>
                                 Close
                                 </Button> */}
-                                
+
                                 <Button type="submit" onClick={this.handleShow.bind(this)}>
-                                Login
+                                    Login
                                 </Button>
                             </Modal.Footer>
                         </Modal>
@@ -315,16 +315,16 @@ export default class Header extends Component {
                                 <Form noValidate validated={this.state.validated} onSubmit={this.handleSubmit.bind(this)}>
                                     <Form.Group controlId="formGroupEmail">
                                         <Form.Label>{this.state.loginEmail}</Form.Label>
-                                        <Form.Control type="email" name="email" placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)}  />
+                                        <Form.Control type="email" name="email" placeholder="Enter email" autoComplete="off" required onChange={this.myChangeHandler.bind(this)} />
                                     </Form.Group>
-                                    <Button type="submit" variant="secondary" className="text-center">Recover Password</Button>                                                                                    
+                                    <Button type="submit" variant="secondary" className="text-center">Recover Password</Button>
                                 </Form>
                             </Modal.Body>
                             <Modal.Footer>
                                 <Button variant="primary" onClick={this.handleShow.bind(this)}>
-                                Login
+                                    Login
                                 </Button>
-                                
+
                                 {/* <Button type="submit" variant="success" onClick={this.ShowRegistrationForm.bind(this)}>
                                 Create New Account
                                 </Button> */}
@@ -333,11 +333,11 @@ export default class Header extends Component {
                     </div>
 
                 </Router>
-                
+
             );
         }
 
-        
+
     }
 }
 
