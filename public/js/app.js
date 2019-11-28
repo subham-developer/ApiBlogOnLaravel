@@ -7077,7 +7077,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "* {\r\n    box-sizing: border-box;\r\n  }\r\n  \r\n  /* Add a gray background color with some padding */\r\n  body {\r\n    font-family: Arial;\r\n    padding: 20px;\r\n    background: #f1f1f1;\r\n  }\r\n  \r\n  /* Header/Blog Title */\r\n  .header {\r\n    padding: 30px;\r\n    font-size: 40px;\r\n    text-align: center;\r\n    background: white;\r\n  }\r\n  \r\n  /* Create two unequal columns that floats next to each other */\r\n  /* Left column */\r\n  .leftcolumn {   \r\n    float: left;\r\n    width: 75%;\r\n  }\r\n  \r\n  /* Right column */\r\n  .rightcolumn {\r\n    float: left;\r\n    width: 25%;\r\n    padding-left: 20px;\r\n  }\r\n  \r\n  /* Fake image */\r\n  .fakeimg {\r\n    background-color: #aaa;\r\n    width: 100%;\r\n    padding: 20px;\r\n  }\r\n  \r\n  /* Add a card effect for articles */\r\n  .card {\r\n     background-color: white;\r\n     padding: 20px;\r\n     margin-top: 20px;\r\n  }\r\n  \r\n  /* Clear floats after the columns */\r\n  .row:after {\r\n    content: \"\";\r\n    display: table;\r\n    clear: both;\r\n  }\r\n  \r\n  /* Footer */\r\n  .footer {\r\n    padding: 20px;\r\n    text-align: center;\r\n    background: #ddd;\r\n    margin-top: 20px;\r\n  }\r\n  \r\n  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */\r\n  @media screen and (max-width: 800px) {\r\n    .leftcolumn, .rightcolumn {   \r\n      width: 100%;\r\n      padding: 0;\r\n    }\r\n  }", ""]);
+exports.push([module.i, "* {\n    box-sizing: border-box;\n  }\n  \n  /* Add a gray background color with some padding */\n  body {\n    font-family: Arial;\n    padding: 20px;\n    background: #f1f1f1;\n  }\n  \n  /* Header/Blog Title */\n  .header {\n    padding: 30px;\n    font-size: 40px;\n    text-align: center;\n    background: white;\n  }\n  \n  /* Create two unequal columns that floats next to each other */\n  /* Left column */\n  .leftcolumn {   \n    float: left;\n    width: 75%;\n  }\n  \n  /* Right column */\n  .rightcolumn {\n    float: left;\n    width: 25%;\n    padding-left: 20px;\n  }\n  \n  /* Fake image */\n  .fakeimg {\n    background-color: #aaa;\n    width: 100%;\n    padding: 20px;\n  }\n  \n  /* Add a card effect for articles */\n  .card {\n     background-color: white;\n     padding: 20px;\n     margin-top: 20px;\n  }\n  \n  /* Clear floats after the columns */\n  .row:after {\n    content: \"\";\n    display: table;\n    clear: both;\n  }\n  \n  /* Footer */\n  .footer {\n    padding: 20px;\n    text-align: center;\n    background: #ddd;\n    margin-top: 20px;\n  }\n  \n  /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */\n  @media screen and (max-width: 800px) {\n    .leftcolumn, .rightcolumn {   \n      width: 100%;\n      padding: 0;\n    }\n  }", ""]);
 
 // exports
 
@@ -80696,7 +80696,7 @@ var safeInvoke = function safeInvoke(fn) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -90510,8 +90510,8 @@ function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\New Laravel\NewApiwithReactandLaravel\APIblog\resources\assets\js\app.js */"./resources/assets/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\New Laravel\NewApiwithReactandLaravel\APIblog\resources\assets\sass\app.scss */"./resources/assets/sass/app.scss");
+__webpack_require__(/*! /Users/shubhamlal/DevelopmentCodes/Simplylearnanything/resources/assets/js/app.js */"./resources/assets/js/app.js");
+module.exports = __webpack_require__(/*! /Users/shubhamlal/DevelopmentCodes/Simplylearnanything/resources/assets/sass/app.scss */"./resources/assets/sass/app.scss");
 
 
 /***/ })
