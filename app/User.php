@@ -1,9 +1,12 @@
 <?php
 
 namespace App;
-
+use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+
+
 
 class User extends Authenticatable
 {
@@ -14,6 +17,8 @@ class User extends Authenticatable
      *
      * @var array
      */
+    use HasApiTokens, Notifiable;
+    
     protected $fillable = [
         'name', 'email', 'password',
     ];
@@ -26,4 +31,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function AauthAcessToken(){
+        return $this->hasMany('\App\OauthAccessToken');
+    }
 }

@@ -13,6 +13,8 @@ import ModalTitle from 'react-bootstrap/ModalTitle';
 import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Form from 'react-bootstrap/Form';
+import logo from './Images/mumbai2.png';
+import DynamicContent from './DynamicContent';
 
 
 
@@ -33,14 +35,20 @@ export default class Header extends Component {
             loginEmail: 'Email',
             loginPassword: 'Password',
             registerationUserName: 'Username',
-            registrationConfirmPassword: 'Confirm Password',
+            registrationConfirmPassword: 'ConfirmPassword',
             forgetEmail: 'Email Id',
+            token: '',
+            errorMessage: '',
+            successMessage: '',
+            urlName: '',
+            urlContent: 'Hello World Shubham'
         }
     }
 
     // const [validated, setValidated] = useState(false);
 
     handleSubmit(event) {
+        event.preventDefault();
         const form = event.currentTarget;
         let err = '';
         console.log(form.email);
@@ -62,36 +70,109 @@ export default class Header extends Component {
             validated: true,
 
         });
-        console.log(this.state.validated);
+        let data = {
+            name: this.state.registerationUserName,
+            email: this.state.email,
+            password: this.state.registrationConfirmPassword,
+            c_password: this.state.registrationConfirmPassword
+        }
+        // console.log(`Hi I am from Data ${data.name}`);
         // setValidated(true);
     }
 
     myChangeHandler(event) {
+        event.preventDefault();
+        console.log(event.target.name)
         let nam = event.target.name;
         let val = event.target.value;
-
+        console.log(`Hi${event.target.name}`);
         this.setState({
             [nam]: val
         });
-        console.log(this.state.email);
+        console.log(`Hello${this.state.loginEmail}`);
     }
 
     componentDidMount() {
         axios.get('http://localhost:8000/category')
             .then(response => {
-                this.setState({ categories: response.data });
+                this.setState({ 
+                    categories: response.data,
+                    // urlContent: "Hello World Shubham"
+                 });
             });
     }
 
     loginUser() {
-        this.setState({
-            isLogin: true
-        });
-        console.log(this.state.isLogin);
+        var emailId = this.state.email
+        var password = this.state.password
+        console.log(`Hey${emailId}`)
+        console.log(password)
+        this.loginApiUser(emailId,password)
+        // if(emailId == 'Shubham' && password == 'Shubham'){
+        //     this.setState({
+        //         isLogin: true
+        //     });
+        // }
+        // this.setState({
+        //     isLogin: false
+        // });
+        
+        // console.log(this.state.isLogin);
+    }
+    loginApiUser(emailId,password){
+        console.log(`I am From LoginAPI USeremail${emailId}`);
+        console.log(`I am From LoginAPI User Password${password}`);
+        var bodyFormData = new FormData();
+        var myurl = 'http://localhost:8000/api/login'
+        bodyFormData.set(`${emailId}`, `${password}`);
+        console.log(bodyFormData)
+        // axios.post('http://localhost:8000/api/login')
+        //     .then(response => {
+        //         this.setState({ categories: response.data });
+        //     });
+            axios({
+                method: 'post',
+                url: 'http://localhost:8000/api/login',
+                data: {
+                    email: `${emailId}`,
+                    password: `${password}`
+                },
+                // headers: {'Content-Type': 'application/json' }
+                }).then(response => {
+                    // handle success
+                    console.log('first one')
+                    console.log(response.data.success.token);
+                    console.log(response.data);
+                    console.log(response.status);
+                    console.log(response.statusText);
+                    console.log(response.headers);
+                    console.log(response.config);
+                    console.log(response.data);
+                    console.log(response);
+                    this.setState({ 
+                        token: response.data.success.token,
+                        isLogin: true,
+                        successMessage: "You have successfully Logged In"
+                     });
+                })
+                // {
+                //     
+                // }).then(response => {
+                //     this.setState({ categories: response.data });
+                // });
+                
+                .catch(response => {
+                    //handle error
+                    console.log('second one')
+                    console.log(response);
+                });
     }
     loginOut() {
         this.setState({
-            isLogin: false
+            isLogin: false,
+            email: ' ',
+            password: ' ',
+            token: ' '
         });
         console.log(this.state.isLogin);
     }
@@ -126,6 +207,25 @@ export default class Header extends Component {
         });
         console.log('Hi' + this.state.modalShow);
     }
+    loadContent(slug){
+        // console.log(slug);
+        axios({
+            method:'GET',
+            url: `http://localhost:8000/api/getContents/${slug}`,
+            // data: {
+            //     slug:  `${slug}`
+            // }
+        }).then(response => {
+            this.setState({
+                urlName: `${slug}`,
+                urlContent: `${slug}`,
+            })
+            console.log(response.data);
+            console.log(response);
+        }).catch(response => {
+            console.log('Error Logs');
+        });
+    }
 
     render() {
         if (this.state.isLogin) {
@@ -144,8 +244,8 @@ export default class Header extends Component {
                         </nav>
                         <div className="header">
                             <h2>
-                                SimplyiLearn
-                             </h2>
+                                SimplyLearnAnything
+                            </h2>
                         </div>
                         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -181,8 +281,9 @@ export default class Header extends Component {
                             <span style={{ color: "white" }} onClick={this.handleShow.bind(this)}>Login</span>
                         </nav>
                         <div className="header">
-                            <h2>
-                                Simply Learn Anything
+                            <h2 onClick={this.loadContent.bind(this,`/`)}>
+                            <Link to="/">Simply Learn Anything</Link>
+                                {/* <img src={logo} width="15%" height="15%" /> */}
                             </h2>
                         </div>
                         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -196,8 +297,8 @@ export default class Header extends Component {
                                     {
                                         this.state.categories.map(category => {
                                             return (
-                                                <li className="nav-item active">
-                                                    <Link to={`${category.name.toLowerCase().split(" ").join("-")}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
+                                                <li className="nav-item active" onClick={this.loadContent.bind(this,`${category.name.toLowerCase().split(" ").join("-")}`)}>
+                                                    <Link to={`/${category.name.toLowerCase().split(" ").join("-")}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
                                                 </li>
                                             )
                                         })
@@ -222,7 +323,11 @@ export default class Header extends Component {
                                 )
                             })
                         }
-                        <Route exact path="/" component={Home} />
+                        
+                        {/* <Route exact path="/" component={Home} /> */}
+                        {/* <Route exact path="/" render={(props) => <Home {...props} isAuthed={true} />} /> */}
+                        <Route exact path={`/${this.state.urlName}`} render={(props) => <DynamicContent {...props} isMyName={this.state.urlContent} />} />
+                        {/* <Route exact path="/about" component={About} /> */}
                         <Route exact path="/about" component={About} />
                         <Route exact path="/Category" component={Category} />
 
