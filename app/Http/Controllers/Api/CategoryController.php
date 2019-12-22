@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Category;
 
@@ -16,7 +17,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        $result = Category::all();
+        // $result = Category::inRandomOrder()->limit(5)->get();
+        $result = Category::limit(5)->get();
         return $result;
     }
 
@@ -39,8 +41,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $slug = $slug = Str::slug($request->category_name, '-');
         $category = new Category();
         $category->name = $request->category_name;
+        $category->slug = $slug;
         $category->save(); 
     }
 

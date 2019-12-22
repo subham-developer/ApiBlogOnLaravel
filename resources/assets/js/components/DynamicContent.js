@@ -22,12 +22,16 @@ import Rightcolumncontent from './Rightcolumncontent';
      constructor(props){
          super(props)
          console.log(props.isMyName)
+        //  console.log(props.cat_id)
+        //  console.log(props.title)
+        //  console.log(props.body)
+        //  console.log(props.slug)
      }
         render(){
             return(
                 
                 <div className="row">
-                    <Leftcolumncontent title={this.props.isMyName} />
+                    <Leftcolumncontent contents={this.props.isMyName} />
                     <Rightcolumncontent />
                 </div>
 

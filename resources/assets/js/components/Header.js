@@ -24,6 +24,7 @@ export default class Header extends Component {
         super();
         this.state = {
             categories: [],
+            postContents:[],
             isLogin: false,
             modalShow: false,
             registerModalShow: false,
@@ -99,6 +100,8 @@ export default class Header extends Component {
                     categories: response.data,
                     // urlContent: "Hello World Shubham"
                  });
+                //  console.log(response.data)
+                //  console.log(typeof(response))
             });
     }
 
@@ -216,12 +219,23 @@ export default class Header extends Component {
             //     slug:  `${slug}`
             // }
         }).then(response => {
-            this.setState({
-                urlName: `${slug}`,
-                urlContent: `${slug}`,
-            })
-            console.log(response.data);
-            console.log(response);
+            if(response.data.data.length != 0){
+                this.setState({
+                    urlName: `${slug}`,
+                    urlContent: `${slug}`,
+                    postContents: response.data.data,
+                })
+                // console.log(this.state.postContents)
+                // console.log(response.data.data.length);
+                // console.log(typeof(response.data.data));
+                // console.log(response.data.data);
+                console.log(this.state.postContents)
+            }else {
+                console.log('empty')
+            }
+            
+            // console.log(response.data);
+            // console.log(response);
         }).catch(response => {
             console.log('Error Logs');
         });
@@ -261,8 +275,11 @@ export default class Header extends Component {
                         </nav>
                         <Dashboard />
                     </div>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/Category" component={Category} />
+                    {/* <Route exact path="/" component={Home} /> */}
+                    <switch>
+                        <Route exact path="/Dashboard" component={Dashboard} />
+                        <Route exact path="/Category" component={Category} />
+                    </switch>
                 </Router>
             );
         }
@@ -297,8 +314,8 @@ export default class Header extends Component {
                                     {
                                         this.state.categories.map(category => {
                                             return (
-                                                <li className="nav-item active" onClick={this.loadContent.bind(this,`${category.name.toLowerCase().split(" ").join("-")}`)}>
-                                                    <Link to={`/${category.name.toLowerCase().split(" ").join("-")}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
+                                                <li className="nav-item active" onClick={this.loadContent.bind(this,`${category.slug}`)}>
+                                                    <Link to={`/${category.slug}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
                                                 </li>
                                             )
                                         })
@@ -310,23 +327,23 @@ export default class Header extends Component {
                                     <Link to="/Category" className="nav-link">Category<span className="sr-only">(current)</span></Link>
                                 </li> */}
                                 </ul>
-                                <form className="form-inline my-2 my-lg-0">
+                                {/* <form className="form-inline my-2 my-lg-0">
                                     <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                                     <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                                </form>
+                                </form> */}
                             </div>
                         </nav>
                         {
                             this.state.categories.map(category => {
                                 return (
-                                    <Route exact path={`${category.name.toLowerCase().split(" ").join("-")}`} component={`${category.name}`} />
+                                    <Route exact path={`${category.slug}`} component={`${category.name}`} />
                                 )
                             })
                         }
                         
                         {/* <Route exact path="/" component={Home} /> */}
                         {/* <Route exact path="/" render={(props) => <Home {...props} isAuthed={true} />} /> */}
-                        <Route exact path={`/${this.state.urlName}`} render={(props) => <DynamicContent {...props} isMyName={this.state.urlContent} />} />
+                        <Route exact path={`/${this.state.urlName}`} render={(props) => <DynamicContent {...props} isMyName={this.state.postContents} />} />
                         {/* <Route exact path="/about" component={About} /> */}
                         <Route exact path="/about" component={About} />
                         <Route exact path="/Category" component={Category} />

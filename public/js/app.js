@@ -80696,7 +80696,7 @@ var safeInvoke = function safeInvoke(fn) {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, __RouterContext, generatePath, matchPath, useHistory, useLocation, useParams, useRouteMatch, withRouter, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88861,7 +88861,7 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Leftcolumncontent__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Rightcolumncontent__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Rightcolumncontent__WEBPACK_IMPORTED_MODULE_3__["default"], null));
     }
   }]);
 
@@ -89569,7 +89569,11 @@ function (_Component) {
     _classCallCheck(this, DynamicContent);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(DynamicContent).call(this, props));
-    console.log(props.isMyName);
+    console.log(props.isMyName); //  console.log(props.cat_id)
+    //  console.log(props.title)
+    //  console.log(props.body)
+    //  console.log(props.slug)
+
     return _this;
   }
 
@@ -89579,7 +89583,7 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Leftcolumncontent__WEBPACK_IMPORTED_MODULE_9__["default"], {
-        title: this.props.isMyName
+        contents: this.props.isMyName
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Rightcolumncontent__WEBPACK_IMPORTED_MODULE_10__["default"], null));
     }
   }]);
@@ -89734,6 +89738,7 @@ function (_Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Header).call(this));
     _this.state = {
       categories: [],
+      postContents: [],
       isLogin: false,
       modalShow: false,
       registerModalShow: false,
@@ -89821,7 +89826,9 @@ function (_Component) {
         _this2.setState({
           categories: response.data // urlContent: "Hello World Shubham"
 
-        });
+        }); //  console.log(response.data)
+        //  console.log(typeof(response))
+
       });
     }
   }, {
@@ -89954,13 +89961,23 @@ function (_Component) {
         // }
 
       }).then(function (response) {
-        _this4.setState({
-          urlName: "".concat(slug),
-          urlContent: "".concat(slug)
-        });
+        if (response.data.data.length != 0) {
+          _this4.setState({
+            urlName: "".concat(slug),
+            urlContent: "".concat(slug),
+            postContents: response.data.data
+          }); // console.log(this.state.postContents)
+          // console.log(response.data.data.length);
+          // console.log(typeof(response.data.data));
+          // console.log(response.data.data);
 
-        console.log(response.data);
-        console.log(response);
+
+          console.log(_this4.state.postContents);
+        } else {
+          console.log('empty');
+        } // console.log(response.data);
+        // console.log(response);
+
       })["catch"](function (response) {
         console.log('Error Logs');
       });
@@ -90029,15 +90046,15 @@ function (_Component) {
           className: "nav-link"
         }, "Category", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "sr-only"
-        }, "(current)")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Dashboard_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+        }, "(current)")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Dashboard_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"], null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("switch", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
           exact: true,
-          path: "/",
-          component: _Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+          path: "/Dashboard",
+          component: _Dashboard_Dashboard__WEBPACK_IMPORTED_MODULE_5__["default"]
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
           exact: true,
           path: "/Category",
           component: _Category_Index__WEBPACK_IMPORTED_MODULE_4__["default"]
-        }));
+        })));
       } else {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", {
           className: "navbar navbar-expand-lg navbar-dark bg-dark"
@@ -90090,9 +90107,9 @@ function (_Component) {
         }, this.state.categories.map(function (category) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
             className: "nav-item active",
-            onClick: _this5.loadContent.bind(_this5, "".concat(category.name.toLowerCase().split(" ").join("-")))
+            onClick: _this5.loadContent.bind(_this5, "".concat(category.slug))
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
-            to: "/".concat(category.name.toLowerCase().split(" ").join("-")),
+            to: "/".concat(category.slug),
             className: "nav-link"
           }, category.name, " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
             className: "sr-only"
@@ -90104,20 +90121,10 @@ function (_Component) {
           className: "nav-link"
         }, "About Us", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "sr-only"
-        }, "(current)")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-          className: "form-inline my-2 my-lg-0"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-          className: "form-control mr-sm-2",
-          type: "search",
-          placeholder: "Search",
-          "aria-label": "Search"
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "btn btn-outline-success my-2 my-sm-0",
-          type: "submit"
-        }, "Search")))), this.state.categories.map(function (category) {
+        }, "(current)")))))), this.state.categories.map(function (category) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
             exact: true,
-            path: "".concat(category.name.toLowerCase().split(" ").join("-")),
+            path: "".concat(category.slug),
             component: "".concat(category.name)
           });
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -90125,7 +90132,7 @@ function (_Component) {
           path: "/".concat(this.state.urlName),
           render: function render(props) {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DynamicContent__WEBPACK_IMPORTED_MODULE_16__["default"], _extends({}, props, {
-              isMyName: _this5.state.urlContent
+              isMyName: _this5.state.postContents
             }));
           }
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -90324,7 +90331,7 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Leftcolumncontent__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Rightcolumncontent__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      });
     }
   }]);
 
@@ -90456,7 +90463,7 @@ function (_Component) {
   function Leftcoulmncontent(props) {
     _classCallCheck(this, Leftcoulmncontent);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Leftcoulmncontent).call(this));
+    return _possibleConstructorReturn(this, _getPrototypeOf(Leftcoulmncontent).call(this, props)); // console.log(`I am from LeftCorner${props.contents}`)
   }
 
   _createClass(Leftcoulmncontent, [{
@@ -90464,14 +90471,16 @@ function (_Component) {
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "leftcolumn"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Title description, Dec 7, 2017"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "fakeimg",
-        style: {
-          height: "200px"
-        }
-      }, "Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Some text.."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.")));
+      }, this.props.contents.map(function (content) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "card"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, content.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h5", null, "Title description", content.updated_at), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "fakeimg",
+          style: {
+            height: "200px"
+          }
+        }, "Image"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, content.body), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Read More....."));
+      }));
     }
   }]);
 

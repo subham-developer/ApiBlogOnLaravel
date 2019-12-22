@@ -3,6 +3,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request; 
 use App\Http\Controllers\Controller; 
 use App\User; 
+use App\Category;
+use App\Post;
 use Illuminate\Support\Facades\Auth; 
 use Validator;
 class UserController extends Controller 
@@ -79,6 +81,10 @@ return response()->json(['success'=>$success], $this-> successStatus);
 
     public function getContent($slug){
         // dd($slug);
-        return response()->json(['data'=>$slug],200);
+        $gettingSlugId = Category::where('slug',$slug)->pluck('id')->toArray();
+        // dd($gettingSlugId[0]);
+        $gotSlugId = $gettingSlugId[0];
+        $gettingPost = Post::where('cat_id',$gotSlugId)->get();
+        return response()->json(['data'=>$gettingPost],200);
     }
 }

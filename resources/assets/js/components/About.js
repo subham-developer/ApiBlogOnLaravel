@@ -7,7 +7,7 @@ export default class About extends Component {
     render() {
         return (
             <div className="row">
-                <Leftcolumncontent />
+                {/* <Leftcolumncontent /> */}
                 <Rightcolumncontent />
             </div>
         );
