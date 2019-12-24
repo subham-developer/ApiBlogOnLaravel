@@ -7,7 +7,6 @@ import Edit from './Edit';
 export default class Index extends Component {
     render() {
         return (
-            <Router>
                 <div className="container">
                     <hr />
                     <Link to="/Category" className="btn btn-primary">Listing</Link>
@@ -17,7 +16,6 @@ export default class Index extends Component {
                     <Route exact path="/Category/Add" component={Add} />
                     <Route exact path="/Category/edit/:id" component={Edit} />
                 </div>
-            </Router>
         );
     }
 }

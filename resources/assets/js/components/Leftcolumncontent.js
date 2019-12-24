@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import Fullarticle from './Fullarticle';
+import ReadMoreReact from 'read-more-react';
+import '../../csss/readMore.css'
 
 export default class Leftcoulmncontent extends Component {
     constructor(props){
         super(props)
-        // console.log(`I am from LeftCorner${props.contents}`)
+        console.log(`I am from LeftCorner${props.urlHistory}`)
     }
     render() {
         return (
@@ -21,14 +25,19 @@ export default class Leftcoulmncontent extends Component {
                                 <h2>{content.title}</h2>
                                 <h5>Title description{content.updated_at}</h5>
                                 <div className="fakeimg" style={{height:"200px"}}>Image</div>
-                                <p>{content.body}</p>
-                                <strong>Read More.....</strong>
+                                {/* <p>{content.body}</p> */}
+                                <ReadMoreReact text={content.body}
+                                    min={50}
+                                    ideal={100}
+                                    max={200500}
+                                    readMoreText="Read More"/>
                             </div>
                         )
                     })
                 }
-                {/* </div> */}
+                {/* </div> */} 
             </div>
+           
         );
     }
 }

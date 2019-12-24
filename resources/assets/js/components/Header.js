@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, useHistory, Link, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import About from './About';
 import Category from './Category/Index';
@@ -15,6 +15,7 @@ import ModalFooter from 'react-bootstrap/ModalFooter';
 import Form from 'react-bootstrap/Form';
 import logo from './Images/mumbai2.png';
 import DynamicContent from './DynamicContent';
+import Notfound from './Notfound';
 
 
 
@@ -42,7 +43,8 @@ export default class Header extends Component {
             errorMessage: '',
             successMessage: '',
             urlName: '',
-            urlContent: 'Hello World Shubham'
+            urlContent: 'Hello World Shubham',
+            active: false
         }
     }
 
@@ -94,7 +96,7 @@ export default class Header extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8000/category')
+        axios.get('http://localhost:8000/api/category')
             .then(response => {
                 this.setState({ 
                     categories: response.data,
@@ -104,6 +106,7 @@ export default class Header extends Component {
                 //  console.log(typeof(response))
             });
     }
+    
 
     loginUser() {
         var emailId = this.state.email
@@ -178,6 +181,7 @@ export default class Header extends Component {
             token: ' '
         });
         console.log(this.state.isLogin);
+        
     }
 
     handleClose() {
@@ -224,6 +228,7 @@ export default class Header extends Component {
                     urlName: `${slug}`,
                     urlContent: `${slug}`,
                     postContents: response.data.data,
+                    active: true,
                 })
                 // console.log(this.state.postContents)
                 // console.log(response.data.data.length);
@@ -244,7 +249,6 @@ export default class Header extends Component {
     render() {
         if (this.state.isLogin) {
             return (
-                <Router>
                     <div>
                         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                             <ul className="navbar-nav mr-auto">
@@ -273,19 +277,19 @@ export default class Header extends Component {
                                 </ul>
                             </div>
                         </nav>
-                        <Dashboard />
-                    </div>
-                    {/* <Route exact path="/" component={Home} /> */}
-                    <switch>
+                        {/* <Dashboard /> */}
+                        {/* <Route exact path="/" component={Home} /> */}
                         <Route exact path="/Dashboard" component={Dashboard} />
                         <Route exact path="/Category" component={Category} />
-                    </switch>
-                </Router>
+                        <Route exact path="/Category/Add" component={Category} />
+                        <Route exact path="/Category/edit/:id" component={Category} />
+                    </div>
+                    
             );
         }
         else {
             return (
-                <Router>
+                
                     <div>
                         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                             <ul className="navbar-nav mr-auto">
@@ -314,7 +318,7 @@ export default class Header extends Component {
                                     {
                                         this.state.categories.map(category => {
                                             return (
-                                                <li className="nav-item active" onClick={this.loadContent.bind(this,`${category.slug}`)}>
+                                                <li className={`nav-item ${this.state.active ? "active" : "inactive"}`} onClick={this.loadContent.bind(this,`${category.slug}`)}>
                                                     <Link to={`/${category.slug}`} className="nav-link">{category.name} <span className="sr-only">(current)</span></Link>
                                                 </li>
                                             )
@@ -340,13 +344,15 @@ export default class Header extends Component {
                                 )
                             })
                         }
-                        
-                        {/* <Route exact path="/" component={Home} /> */}
-                        {/* <Route exact path="/" render={(props) => <Home {...props} isAuthed={true} />} /> */}
-                        <Route exact path={`/${this.state.urlName}`} render={(props) => <DynamicContent {...props} isMyName={this.state.postContents} />} />
-                        {/* <Route exact path="/about" component={About} /> */}
-                        <Route exact path="/about" component={About} />
-                        <Route exact path="/Category" component={Category} />
+                        <Switch>
+                            {/* <Route exact path="/" component={Home} /> */}
+                            {/* <Route exact path="/" render={(props) => <Home {...props} isAuthed={true} />} /> */}
+                            <Route exact path={`/${this.state.urlName}`} render={(props) => <DynamicContent {...props} isMyName={this.state.postContents} />} />
+                            {/* <Route exact path="/about" component={About} /> */}
+                            <Route exact path="/about" component={About} />
+                            <Route exact path="/Category" component={Category} />
+                            <Route exact path="/*" component={Notfound} />
+                        </Switch>
 
 
                         {/* Login Modal start Here */}
@@ -453,8 +459,6 @@ export default class Header extends Component {
                             </Modal.Footer>
                         </Modal>
                     </div>
-
-                </Router>
 
             );
         }

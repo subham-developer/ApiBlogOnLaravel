@@ -44,7 +44,7 @@ $factory->define(App\Post::class, function (Faker $faker) {
         // 'title' => $faker->unique()->safeEmail,
         'title' => $title,
         'slug' => $slug, 
-        'body' => $faker->sentence(50), 
+        'body' => $faker->sentence(500), 
         // 'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
         // 'remember_token' => str_random(10),
     ];

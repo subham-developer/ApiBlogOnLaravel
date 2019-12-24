@@ -21,6 +21,7 @@ import Rightcolumncontent from './Rightcolumncontent';
  export default class DynamicContent extends Component{
      constructor(props){
          super(props)
+        //  console.log(props)
          console.log(props.isMyName)
         //  console.log(props.cat_id)
         //  console.log(props.title)
@@ -31,7 +32,7 @@ import Rightcolumncontent from './Rightcolumncontent';
             return(
                 
                 <div className="row">
-                    <Leftcolumncontent contents={this.props.isMyName} />
+                    <Leftcolumncontent contents={this.props.isMyName}/>
                     <Rightcolumncontent />
                 </div>
 

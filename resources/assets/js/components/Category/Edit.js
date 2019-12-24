@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import CKEditor from 'ckeditor4-react';
 
 export default class Add extends Component {
     constructor(props){
@@ -13,7 +14,7 @@ export default class Add extends Component {
     }
     componentDidMount()
     {
-        axios.get('http://localhost:8000/Category/edit/'+this.props.match.params.id)
+        axios.get('http://localhost:8000/api/Category/edit/'+this.props.match.params.id)
         .then(response=>{
             console.log(response.data.name);
             this.setState({category_name:response.data.name});
@@ -24,14 +25,16 @@ export default class Add extends Component {
             category_name:e.target.value
         });
     }
-    
+    onEditBodyText(e){
+        console.log(e.editor.getData());
+    }
     onSubmit(e)
     {
         e.preventDefault();
         const category = {
             category_name : this.state.category_name
         }
-        axios.put('http://localhost:8000/category/update/'+this.props.match.params.id,category)
+        axios.put('http://localhost:8000/api/category/update/'+this.props.match.params.id,category)
         .then(
             res=>console.log(res.data)
             );
@@ -51,6 +54,14 @@ export default class Add extends Component {
                         aria-describedby="emailHelp" 
                         placeholder="Enter CategoryName" />
                     </div>
+                    <CKEditor
+                        data=""
+                        type="classic"
+                        onChange={this.onEditBodyText.bind(this)}
+                        name="body"
+                    />
+                    
+                    
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
             </div>

@@ -84,7 +84,9 @@ class CategoryController extends Controller
         //
         // dd($request->all());
         $category = Category::find($id);
+        $slug = $slug = Str::slug($request->category_name, '-');
         $category->name = $request->category_name;
+        $category->slug = $slug;
         $category->save(); 
     }
 
